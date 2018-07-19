@@ -1,19 +1,35 @@
 import * as React from 'react';
 import './App.css';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
-import logo from './logo.svg';
+import Table from './components/Table';
+import Home from './components/Home';
 
 class App extends React.Component {
   public render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        <Router>
+            <div>
+                <header>
+                    <Navbar>
+                        <Nav>
+                            <NavItem>
+                                <Link to="/">Home</Link>
+                            </NavItem>
+                            <NavItem>
+                                <Link to="/table">Table</Link>
+                            </NavItem>
+                        </Nav>
+                    </Navbar>
+                </header>
+                <div className="container">
+                    <Route exact={true} path="/" component={Home} />
+                    <Route path="/table" component={Table} />
+                </div>
+            </div>
+        </Router>
       </div>
     );
   }
