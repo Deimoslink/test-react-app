@@ -1,10 +1,14 @@
 import * as React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
 import Table from './components/Table';
 import Home from './components/Home';
+import {LinkContainer, IndexLinkContainer} from "react-router-bootstrap";
+// import store from "./store";
+
+
 
 class App extends React.Component {
   public render() {
@@ -15,12 +19,12 @@ class App extends React.Component {
                 <header>
                     <Navbar>
                         <Nav>
-                            <NavItem>
-                                <Link to="/">Home</Link>
-                            </NavItem>
-                            <NavItem>
-                                <Link to="/table">Table</Link>
-                            </NavItem>
+                            <IndexLinkContainer to="/">
+                                <NavItem>Home</NavItem>
+                            </IndexLinkContainer>
+                            <LinkContainer to="/table">
+                                <NavItem>Table</NavItem>
+                            </LinkContainer>
                         </Nav>
                     </Navbar>
                 </header>
