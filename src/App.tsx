@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
-import Table from './components/Table';
+import TracksTable from './components/TracksTable';
 import Home from './components/Home';
 import {LinkContainer, IndexLinkContainer} from "react-router-bootstrap";
 // import store from "./store";
@@ -30,7 +30,7 @@ class App extends React.Component {
                 </header>
                 <div className="container">
                     <Route exact={true} path="/" component={Home} />
-                    <Route path="/table" component={Table} />
+                    <Route path="/table" component={TracksTable} />
                 </div>
             </div>
         </Router>
