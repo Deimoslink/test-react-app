@@ -9,3 +9,7 @@ export const getShowPerPage = (state) => {
 export const getSorting = (state) => {
     return state.sorting;
 };
+
+export const getFilters = (state) => {
+    return state.filters;
+};

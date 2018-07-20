@@ -2,9 +2,10 @@ import * as React from 'react';
 import './TracksTable.css';
 import {connect} from 'react-redux';
 import {Pagination, Table} from 'react-bootstrap';
-import {getResults, getShowPerPage, getSorting} from "../selectors";
-import {setNewResults, setNewShowPerPage, setSorting} from "../actions";
-import {SHOW_PER_PAGE_OPTIONS} from "../constants";
+import {getResults, getSorting} from "../selectors";
+import {setNewResults, setSorting} from "../actions";
+import Filters from "./Filters";
+import ShowPerPage from './ShowPerPage';
 
 class TracksTable extends React.Component<any, any> {
 
@@ -40,10 +41,13 @@ class TracksTable extends React.Component<any, any> {
         return classNames.join(' ');
     }
 
+    public componentWillMount() {
+        this.props.setNewResults();
+    }
+
     public render() {
         return (
             <div className="TracksTable">
-                <button className="btn btn-default" onClick={() => {this.props.setNewResults()}}>GET!</button>
                 <div className="row">
                     <div className="col-md-8">
                         <Table striped={true} bordered={true} condensed={true}>
@@ -57,15 +61,12 @@ class TracksTable extends React.Component<any, any> {
                                     <i onClick={() => {this.toggleSortingRules('track')}}
                                        className={this.tableHeaderClassNames('track')}/>
                                 </th>
-                                <th>Genre
-                                    <i onClick={() => {this.toggleSortingRules('genre')}}
-                                       className={this.tableHeaderClassNames('genre')}/>
-                                </th>
-                                <th>Year</th>
+                                <th>Duration</th>
+                                <th>Times Listened</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {this.props.results.map((track, i) =>
+                            {this.props.results.content.map((track, i) =>
                                 <tr key={i}>
                                     <td>{track.artist}</td>
                                     <td>{track.name}</td>
@@ -77,18 +78,7 @@ class TracksTable extends React.Component<any, any> {
                         </Table>
                     </div>
                     <div className="col-md-4">
-                        <div className="form-group">
-                            <label htmlFor="artistInput">Artist</label>
-                            <input type="text" className="form-control" id="artistInput"/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="genreInput">Genre</label>
-                            <input type="text" className="form-control" id="genreInput"/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="yearInput">Year</label>
-                            <input type="text" className="form-control" id="yearInput"/>
-                        </div>
+                        <Filters/>
                     </div>
                 </div>
                 <div className="row">
@@ -107,20 +97,7 @@ class TracksTable extends React.Component<any, any> {
                         </Pagination>
                     </div>
                     <div className="col-md-4 pagination-wrapper">
-                        <p>this props {this.props.showPerPage}</p>
-                        <Pagination>
-                            {SHOW_PER_PAGE_OPTIONS.map((option, i) =>
-                                <Pagination.Item key={i}
-                                                 onClick={() => {
-                                                     if(option !== this.props.showPerPage) {
-                                                         this.props.setNewShowPerPage(option)
-                                                     }
-                                                 }}
-                                                 active={option === this.props.showPerPage}>
-                                    {option}
-                                </Pagination.Item>
-                            )}
-                        </Pagination>
+                        <ShowPerPage/>
                     </div>
                 </div>
 
@@ -132,12 +109,10 @@ class TracksTable extends React.Component<any, any> {
 export default connect(
     state => ({
         results: getResults(state),
-        showPerPage: getShowPerPage(state),
         sorting: getSorting(state)
     }),
     {
         setNewResults,
-        setNewShowPerPage,
         setSorting
     }
 )(TracksTable);

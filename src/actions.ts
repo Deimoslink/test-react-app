@@ -3,10 +3,14 @@ import {getTracksWithPagination} from "./api.service";
 export const setNewResults = () => {
     return (dispatch) => {
         getTracksWithPagination().then(res => {
+            console.log(res.headers['x-total-count']);
             dispatch({
                 type: 'SET_RESULTS',
-                payload: res.data
-            })
+                payload: {
+                    content: res.data,
+                    total: res.headers['x-total-count']
+                }
+            });
         })
     }
 };
@@ -25,5 +29,15 @@ export const setSorting = (sorting) => {
             field: sorting.field,
             direction: sorting.direction
         }
+    }
+};
+
+export const setFilters = (filter) => {
+    return {
+        type: 'SET_FILTERS',
+        payload: {
+            artist: filter.artist,
+            track: filter.track
+        },
     }
 };

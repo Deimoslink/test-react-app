@@ -1,21 +1,48 @@
 import * as React from 'react';
-import store from "../store";
+import {connect} from 'react-redux';
+import {getFilters} from "../selectors";
+import {setFilters} from "../actions";
 
-class Filters extends React.Component {
+class Filters extends React.Component<any, any> {
     public render() {
         return (
             <div>
-                Filters works!
-                <br/>
-                <input type="text" onChange={(e) => {
-                    store.dispatch({
-                        type: 'SET_FILTER',
-                        payload: e.target.value
-                    });
-                }} />
+                <div className="form-group">
+                    <label htmlFor="artistInput">Artist</label>
+                    <input type="text"
+                           onChange={(e) => {
+                               this.props.setFilters({
+                                   artist: e.target.value,
+                                   track: this.props.filters.track
+                               });
+                           }}
+                           className="form-control"
+                           id="artistInput"/>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="genreInput">Track</label>
+                    <input type="text"
+                           onChange={(e) => {
+                               this.props.setFilters({
+                                   artist: this.props.filters.artist,
+                                   track: e.target.value
+                               });
+                           }}
+                           className="form-control"
+                           id="genreInput"/>
+                </div>
             </div>
         );
     }
 }
 
-export default Filters;
+export default connect(
+    state => ({
+        filters: getFilters(state),
+    }),
+    {
+        setFilters
+    }
+)(Filters);
+
+

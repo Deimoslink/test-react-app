@@ -9,12 +9,22 @@ const defaultState = {
         direction: ''
     },
     showPerPage: SHOW_PER_PAGE_OPTIONS[0],
-    filters: {},
-    results: [],
+    filters: {
+        artist: '',
+        track: ''
+    },
+    paginatorState: {
+        totalPages: 1,
+        currentPage: 1
+    },
+    results: {
+        content: [],
+        total: 0
+    },
 };
 
 const filtersReducer = (state = defaultState.filters, action) => {
-    if (action.type === 'SET_FILTER') {
+    if (action.type === 'SET_FILTERS') {
         return action.payload;
     }
     return state;
@@ -34,6 +44,14 @@ const showPerPageReducer = (state = defaultState.showPerPage, action) => {
     return state;
 };
 
+const paginatorStateReducer = (state = defaultState.paginatorState, action) => {
+    if (action.type === 'SET_PAGINATOR_STATE') {
+        console.log(state, action.payload);
+        return action.payload;
+    }
+    return state;
+};
+
 const resultsReducer = (state = defaultState.results, action) => {
     if (action.type === 'SET_RESULTS') {
         return action.payload;
@@ -45,7 +63,8 @@ const reducer = {
     filters: filtersReducer,
     sorting: sortingReducer,
     showPerPage: showPerPageReducer,
-    results: resultsReducer
+    results: resultsReducer,
+    paginatorState: paginatorStateReducer
 };
 
 const middlewares = applyMiddleware(thunk, createLogger({collapsed: false}));
