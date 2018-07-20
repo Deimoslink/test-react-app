@@ -2,12 +2,9 @@ import * as React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
-
 import TracksTable from './components/TracksTable';
 import Home from './components/Home';
 import {LinkContainer, IndexLinkContainer} from "react-router-bootstrap";
-// import store from "./store";
-
 
 
 class App extends React.Component {

@@ -1,6 +1,7 @@
-// import {createSelector} from 'reselect';
-
 export const getResults = (state) => {
-    console.log('getResults triggered');
-    return state.results || 'test'
+    return state.results;
+};
+
+export const getShowPerPage = (state) => {
+    return state.showPerPage;
 };

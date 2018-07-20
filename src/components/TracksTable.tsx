@@ -1,15 +1,12 @@
 import * as React from 'react';
 import './TracksTable.css';
 import {connect} from 'react-redux';
-// import store from "../store";
 import {Pagination, Table} from 'react-bootstrap';
-// import {getTracksWithPagination} from "../api.service";
-import {getResults} from "../selectors";
-import {setNewResults} from "../actions";
+import {getResults, getShowPerPage} from "../selectors";
+import {setNewResults, setNewShowPerPage} from "../actions";
+import {SHOW_PER_PAGE_OPTIONS} from "../constants";
 
 class TracksTable extends React.Component<any, any> {
-
-    public tracks: any[] = [{name: 1, artist: 1}];
 
     constructor(props: any) {
         super(props);
@@ -18,24 +15,25 @@ class TracksTable extends React.Component<any, any> {
     public render() {
         return (
             <div className="TracksTable">
+                <button className="btn btn-default" onClick={() => {setNewResults()}}>GET!</button>
                 <div className="row">
                     <div className="col-md-8">
                         <Table striped={true} bordered={true} condensed={true}>
                             <thead>
                             <tr>
-                                <th>Artist</th>
-                                <th>Track</th>
-                                <th>Genre</th>
+                                <th>Artist<i className="glyphicon glyphicon-sort-by-alphabet fr pointable"/></th>
+                                <th>Track<i className="glyphicon glyphicon-sort fr  pointable"/></th>
+                                <th>Genre<i className="glyphicon glyphicon-sort-by-alphabet-alt fr pointable"/></th>
                                 <th>Year</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {this.tracks.map((track, i) =>
+                            {this.props.results.map((track, i) =>
                                 <tr key={i}>
                                     <td>{track.artist}</td>
                                     <td>{track.name}</td>
-                                    <td>{track.name}</td>
-                                    <td>{track.name}</td>
+                                    <td>{track.duration}</td>
+                                    <td>{track.playcount}</td>
                                 </tr>
                             )}
                             </tbody>
@@ -72,14 +70,20 @@ class TracksTable extends React.Component<any, any> {
                         </Pagination>
                     </div>
                     <div className="col-md-4 pagination-wrapper">
+                        <p>this props {this.props.showPerPage}</p>
                         <Pagination>
-                            <Pagination.Item active={true}>{10}</Pagination.Item>
-                            <Pagination.Item>{25}</Pagination.Item>
-                            <Pagination.Item>{50}</Pagination.Item>
-                            <Pagination.Item>{100}</Pagination.Item>
+                            {SHOW_PER_PAGE_OPTIONS.map((option, i) =>
+                                <Pagination.Item key={i}
+                                                 onClick={() => {
+                                                     if(option !== this.props.showPerPage) {
+                                                         setNewShowPerPage(option)
+                                                     }
+                                                 }}
+                                                 active={option === this.props.showPerPage}>
+                                    {option}
+                                </Pagination.Item>
+                            )}
                         </Pagination>
-                        <p>{this.props.results}</p>
-                        <button className="btn btn-default" onClick={() => {setNewResults('new results set!')}}>GET!</button>
                     </div>
                 </div>
 
@@ -88,15 +92,14 @@ class TracksTable extends React.Component<any, any> {
     }
 }
 
-
-
-
 export default connect(
     state => ({
-        results: getResults(state)
+        results: getResults(state),
+        showPerPage: getShowPerPage(state)
     }),
     {
-        setNewResults
+        setNewResults,
+        setNewShowPerPage
     }
 )(TracksTable);
 
