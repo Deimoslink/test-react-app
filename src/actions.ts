@@ -17,3 +17,13 @@ export const setNewShowPerPage = (option) => {
         payload: option
     }
 };
+
+export const setSorting = (sorting) => {
+    return {
+        type: 'SET_SORTING',
+        payload: {
+            field: sorting.field,
+            direction: sorting.direction
+        }
+    }
+};

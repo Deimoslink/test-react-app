@@ -5,3 +5,7 @@ export const getResults = (state) => {
 export const getShowPerPage = (state) => {
     return state.showPerPage;
 };
+
+export const getSorting = (state) => {
+    return state.sorting;
+};

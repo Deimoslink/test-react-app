@@ -4,7 +4,10 @@ import thunk from "redux-thunk";
 import {SHOW_PER_PAGE_OPTIONS} from "./constants";
 
 const defaultState = {
-    sorting: {},
+    sorting: {
+        field: '',
+        direction: ''
+    },
     showPerPage: SHOW_PER_PAGE_OPTIONS[0],
     filters: {},
     results: [],

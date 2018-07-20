@@ -2,11 +2,43 @@ import * as React from 'react';
 import './TracksTable.css';
 import {connect} from 'react-redux';
 import {Pagination, Table} from 'react-bootstrap';
-import {getResults, getShowPerPage} from "../selectors";
-import {setNewResults, setNewShowPerPage} from "../actions";
+import {getResults, getShowPerPage, getSorting} from "../selectors";
+import {setNewResults, setNewShowPerPage, setSorting} from "../actions";
 import {SHOW_PER_PAGE_OPTIONS} from "../constants";
 
 class TracksTable extends React.Component<any, any> {
+
+    public toggleSortingRules(field) {
+        let direction = 'asc';
+        if (this.props.sorting.field === field) {
+            if (this.props.sorting.direction === 'asc') {
+                direction = 'desc';
+            }
+            if (this.props.sorting.direction === 'desc') {
+                direction = '';
+                field = '';
+            }
+        }
+        this.props.setSorting({
+            field,
+            direction
+        });
+    }
+
+    public tableHeaderClassNames(field) {
+        const classNames = ['glyphicon', 'fr', 'pointable'];
+        let currentDirectionIcon = 'glyphicon-sort';
+        if (this.props.sorting.field === field) {
+            if (this.props.sorting.direction === 'asc') {
+                currentDirectionIcon = 'glyphicon-sort-by-alphabet';
+            }
+            if (this.props.sorting.direction === 'desc') {
+                currentDirectionIcon = 'glyphicon-sort-by-alphabet-alt';
+            }
+        }
+        classNames.push(currentDirectionIcon);
+        return classNames.join(' ');
+    }
 
     public render() {
         return (
@@ -17,9 +49,18 @@ class TracksTable extends React.Component<any, any> {
                         <Table striped={true} bordered={true} condensed={true}>
                             <thead>
                             <tr>
-                                <th>Artist<i className="glyphicon glyphicon-sort-by-alphabet fr pointable"/></th>
-                                <th>Track<i className="glyphicon glyphicon-sort fr  pointable"/></th>
-                                <th>Genre<i className="glyphicon glyphicon-sort-by-alphabet-alt fr pointable"/></th>
+                                <th>Artist
+                                    <i onClick={() => {this.toggleSortingRules('artist')}}
+                                       className={this.tableHeaderClassNames('artist')}/>
+                                </th>
+                                <th>Track
+                                    <i onClick={() => {this.toggleSortingRules('track')}}
+                                       className={this.tableHeaderClassNames('track')}/>
+                                </th>
+                                <th>Genre
+                                    <i onClick={() => {this.toggleSortingRules('genre')}}
+                                       className={this.tableHeaderClassNames('genre')}/>
+                                </th>
                                 <th>Year</th>
                             </tr>
                             </thead>
@@ -91,11 +132,13 @@ class TracksTable extends React.Component<any, any> {
 export default connect(
     state => ({
         results: getResults(state),
-        showPerPage: getShowPerPage(state)
+        showPerPage: getShowPerPage(state),
+        sorting: getSorting(state)
     }),
     {
         setNewResults,
-        setNewShowPerPage
+        setNewShowPerPage,
+        setSorting
     }
 )(TracksTable);
 
