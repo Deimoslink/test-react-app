@@ -8,14 +8,10 @@ import {SHOW_PER_PAGE_OPTIONS} from "../constants";
 
 class TracksTable extends React.Component<any, any> {
 
-    constructor(props: any) {
-        super(props);
-    }
-
     public render() {
         return (
             <div className="TracksTable">
-                <button className="btn btn-default" onClick={() => {setNewResults()}}>GET!</button>
+                <button className="btn btn-default" onClick={() => {this.props.setNewResults()}}>GET!</button>
                 <div className="row">
                     <div className="col-md-8">
                         <Table striped={true} bordered={true} condensed={true}>
@@ -76,7 +72,7 @@ class TracksTable extends React.Component<any, any> {
                                 <Pagination.Item key={i}
                                                  onClick={() => {
                                                      if(option !== this.props.showPerPage) {
-                                                         setNewShowPerPage(option)
+                                                         this.props.setNewShowPerPage(option)
                                                      }
                                                  }}
                                                  active={option === this.props.showPerPage}>
