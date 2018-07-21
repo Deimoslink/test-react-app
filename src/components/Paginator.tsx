@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import {getPagination} from "../selectors";
+import {getPagination} from '../selectors';
 import {Pagination} from 'react-bootstrap';
-import {setCurrentPage} from "../actions";
+import {setCurrentPage} from '../actions';
 
 class Paginator extends React.Component<any, any> {
 
@@ -14,8 +14,7 @@ class Paginator extends React.Component<any, any> {
         this.constructButtons(nextProps);
     }
 
-    public constructButtons(props) {
-        console.log(props);
+    public constructButtons(props): void {
         const current = props.pagination.currentPage;
         const total = props.pagination.totalPages;
         const pagesArray = Array(total).fill('').map((x, i) => i + 1);
@@ -33,9 +32,8 @@ class Paginator extends React.Component<any, any> {
 
     public render() {
         return (
+            this.props.pagination.totalPages > 1 ?
             <div>
-                <p>{this.props.pagination.currentPage}</p>
-                <p>{this.props.pagination.totalPages}</p>
                 <Pagination>
                     <Pagination.First disabled={this.props.pagination.currentPage === 1}
                                       onClick={() => {
@@ -68,6 +66,7 @@ class Paginator extends React.Component<any, any> {
                                      }}/>
                 </Pagination>
             </div>
+                : null
         );
     }
 }

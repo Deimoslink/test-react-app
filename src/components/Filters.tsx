@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import {getFilters} from "../selectors";
-import {setFilters} from "../actions";
+import {getFilters} from '../selectors';
+import {setFilters} from '../actions';
 import {DebounceInput} from 'react-debounce-input';
 
 class Filters extends React.Component<any, any> {
@@ -15,7 +15,7 @@ class Filters extends React.Component<any, any> {
                                    onChange={(e) => {
                                        this.props.setFilters({
                                            artist: e.target.value,
-                                           track: this.props.filters.track
+                                           name: this.props.filters.name
                                        });
                                    }}
                                    className="form-control"
@@ -28,7 +28,7 @@ class Filters extends React.Component<any, any> {
                                    onChange={(e) => {
                                        this.props.setFilters({
                                            artist: this.props.filters.artist,
-                                           track: e.target.value
+                                           name: e.target.value
                                        });
                                    }}
                                    className="form-control"

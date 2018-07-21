@@ -1,4 +1,4 @@
-import {getTracksWithPagination} from "./api.service";
+import {getTracksWithPagination} from './api.service';
 
 export const setNewResults = () => {
     return (dispatch, getState) => {
@@ -33,6 +33,10 @@ export const setNewShowPerPage = (option) => {
 export const setSorting = (sorting) => {
     return (dispatch) => {
         dispatch({
+            type: 'SET_CURRENT_PAGE',
+            payload: 1
+        });
+        dispatch({
             type: 'SET_SORTING',
             payload: {
                 field: sorting.field,
@@ -46,10 +50,14 @@ export const setSorting = (sorting) => {
 export const setFilters = (filter) => {
     return (dispatch) => {
         dispatch({
+            type: 'SET_CURRENT_PAGE',
+            payload: 1
+        });
+        dispatch({
             type: 'SET_FILTERS',
             payload: {
                 artist: filter.artist,
-                track: filter.track
+                name: filter.name
             },
         });
         dispatch(setNewResults());

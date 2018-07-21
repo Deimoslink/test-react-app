@@ -1,7 +1,7 @@
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import {createLogger} from 'redux-logger';
-import thunk from "redux-thunk";
-import {SHOW_PER_PAGE_OPTIONS} from "./constants";
+import thunk from 'redux-thunk';
+import {SHOW_PER_PAGE_OPTIONS} from './constants';
 
 const defaultState = {
     sorting: {
@@ -12,7 +12,7 @@ const defaultState = {
     currentPage: 1,
     filters: {
         artist: '',
-        track: ''
+        name: ''
     },
     results: {
         content: [],
@@ -63,7 +63,7 @@ const reducer = {
     currentPage: currentPageReducer
 };
 
-const middlewares = applyMiddleware(thunk, createLogger({collapsed: false}));
+const middlewares = applyMiddleware(thunk, createLogger({collapsed: true}));
 const store = createStore(combineReducers({...reducer}), compose(middlewares));
 
 export default store;

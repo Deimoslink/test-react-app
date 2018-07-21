@@ -2,15 +2,15 @@ import * as React from 'react';
 import './TracksTable.css';
 import {connect} from 'react-redux';
 import {Table} from 'react-bootstrap';
-import {getResults, getSorting} from "../selectors";
-import {setNewResults, setSorting} from "../actions";
-import Filters from "./Filters";
-import Paginator from "./Paginator";
+import {getResults, getSorting} from '../selectors';
+import {setNewResults, setSorting} from '../actions';
+import Filters from './Filters';
+import Paginator from './Paginator';
 import ShowPerPage from './ShowPerPage';
 
 class TracksTable extends React.Component<any, any> {
 
-    public toggleSortingRules(field) {
+    public toggleSortingRules(field): void {
         let direction = 'asc';
         if (this.props.sorting.field === field) {
             if (this.props.sorting.direction === 'asc') {
@@ -27,15 +27,19 @@ class TracksTable extends React.Component<any, any> {
         });
     }
 
-    public tableHeaderClassNames(field) {
+    public durationPipe(secs: number): string {
+        return `${Math.floor(secs / 60)}:${secs % 60 < 10 ? + '0' : ''}${secs % 60}`
+    }
+
+    public tableHeaderClassNames(field: string, isAlphabetic?: boolean): string {
         const classNames = ['glyphicon', 'fr', 'pointable'];
         let currentDirectionIcon = 'glyphicon-sort';
         if (this.props.sorting.field === field) {
             if (this.props.sorting.direction === 'asc') {
-                currentDirectionIcon = 'glyphicon-sort-by-alphabet';
+                currentDirectionIcon = isAlphabetic ? 'glyphicon-sort-by-alphabet' : 'glyphicon-sort-by-order';
             }
             if (this.props.sorting.direction === 'desc') {
-                currentDirectionIcon = 'glyphicon-sort-by-alphabet-alt';
+                currentDirectionIcon = isAlphabetic ? 'glyphicon-sort-by-alphabet-alt' : 'glyphicon-sort-by-order-alt';
             }
         }
         classNames.push(currentDirectionIcon);
@@ -56,14 +60,20 @@ class TracksTable extends React.Component<any, any> {
                             <tr>
                                 <th>Artist
                                     <i onClick={() => {this.toggleSortingRules('artist')}}
-                                       className={this.tableHeaderClassNames('artist')}/>
+                                       className={this.tableHeaderClassNames('artist', true)}/>
                                 </th>
                                 <th>Track
-                                    <i onClick={() => {this.toggleSortingRules('track')}}
-                                       className={this.tableHeaderClassNames('track')}/>
+                                    <i onClick={() => {this.toggleSortingRules('name')}}
+                                       className={this.tableHeaderClassNames('name', true)}/>
                                 </th>
-                                <th>Duration</th>
-                                <th>Times Listened</th>
+                                <th>Duration
+                                    <i onClick={() => {this.toggleSortingRules('duration')}}
+                                       className={this.tableHeaderClassNames('duration')}/>
+                                </th>
+                                <th>Times Listened
+                                    <i onClick={() => {this.toggleSortingRules('playcount')}}
+                                       className={this.tableHeaderClassNames('playcount')}/>
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -71,7 +81,7 @@ class TracksTable extends React.Component<any, any> {
                                 <tr key={i}>
                                     <td>{track.artist}</td>
                                     <td>{track.name}</td>
-                                    <td>{track.duration}</td>
+                                    <td>{this.durationPipe(track.duration)}</td>
                                     <td>{track.playcount}</td>
                                 </tr>
                             )}
