@@ -1,4 +1,10 @@
 .TracksTable {
+  table {
+    table-layout: fixed;
+    thead th:nth-child(3), thead th:nth-child(4) {
+      width: 130px;
+    }
+  }
   .pagination-wrapper {
     text-align: center;
   }
