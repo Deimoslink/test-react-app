@@ -24,7 +24,7 @@
     "build-css": "node-sass src/ -o src/",
     "watch-css": "node-sass src/ -o src/ --watch --recursive",
     "start-js": "react-scripts-ts start",
-    "start": "npm-run-all -p build-css watch-css start-js",
+    "start": "npm-run-all -p server build-css watch-css start-js",
     "build-js": "react-scripts-ts build",
     "build": "npm-run-all build-css build-js",
     "test": "react-scripts-ts test --env=jsdom  --watchAll",
