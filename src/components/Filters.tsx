@@ -2,6 +2,7 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import {getFilters} from "../selectors";
 import {setFilters} from "../actions";
+import {DebounceInput} from 'react-debounce-input';
 
 class Filters extends React.Component<any, any> {
     public render() {
@@ -9,27 +10,29 @@ class Filters extends React.Component<any, any> {
             <div>
                 <div className="form-group">
                     <label htmlFor="artistInput">Artist</label>
-                    <input type="text"
-                           onChange={(e) => {
-                               this.props.setFilters({
-                                   artist: e.target.value,
-                                   track: this.props.filters.track
-                               });
-                           }}
-                           className="form-control"
-                           id="artistInput"/>
+                    <DebounceInput type="text"
+                                   debounceTimeout={500}
+                                   onChange={(e) => {
+                                       this.props.setFilters({
+                                           artist: e.target.value,
+                                           track: this.props.filters.track
+                                       });
+                                   }}
+                                   className="form-control"
+                                   id="artistInput"/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="genreInput">Track</label>
-                    <input type="text"
-                           onChange={(e) => {
-                               this.props.setFilters({
-                                   artist: this.props.filters.artist,
-                                   track: e.target.value
-                               });
-                           }}
-                           className="form-control"
-                           id="genreInput"/>
+                    <DebounceInput type="text"
+                                   debounceTimeout={500}
+                                   onChange={(e) => {
+                                       this.props.setFilters({
+                                           artist: this.props.filters.artist,
+                                           track: e.target.value
+                                       });
+                                   }}
+                                   className="form-control"
+                                   id="genreInput"/>
                 </div>
             </div>
         );

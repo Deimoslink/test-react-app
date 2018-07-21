@@ -13,3 +13,10 @@ export const getSorting = (state) => {
 export const getFilters = (state) => {
     return state.filters;
 };
+
+export const getPagination = (state) => {
+    return {
+        currentPage: state.currentPage,
+        totalPages: Math.ceil(state.results.total / state.showPerPage)
+    }
+};

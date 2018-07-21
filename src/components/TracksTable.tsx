@@ -1,10 +1,11 @@
 import * as React from 'react';
 import './TracksTable.css';
 import {connect} from 'react-redux';
-import {Pagination, Table} from 'react-bootstrap';
+import {Table} from 'react-bootstrap';
 import {getResults, getSorting} from "../selectors";
 import {setNewResults, setSorting} from "../actions";
 import Filters from "./Filters";
+import Paginator from "./Paginator";
 import ShowPerPage from './ShowPerPage';
 
 class TracksTable extends React.Component<any, any> {
@@ -83,18 +84,7 @@ class TracksTable extends React.Component<any, any> {
                 </div>
                 <div className="row">
                     <div className="col-md-8 pagination-wrapper">
-                        <Pagination>
-                            <Pagination.First />
-                            <Pagination.Prev />
-                            <Pagination.Ellipsis />
-                            <Pagination.Item>{10}</Pagination.Item>
-                            <Pagination.Item>{11}</Pagination.Item>
-                            <Pagination.Item active={false}>{12}</Pagination.Item>
-                            <Pagination.Item>{13}</Pagination.Item>
-                            <Pagination.Item>{14}</Pagination.Item>
-                            <Pagination.Next />
-                            <Pagination.Last />
-                        </Pagination>
+                        <Paginator/>
                     </div>
                     <div className="col-md-4 pagination-wrapper">
                         <ShowPerPage/>
