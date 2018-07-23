@@ -1,10 +1,9 @@
 import * as React from 'react';
 import TracksTable, {durationPipe} from './TracksTable';
-import {shallow} from "enzyme";
-import {applyMiddleware, combineReducers, compose, createStore} from "redux";
+import {shallow} from 'enzyme';
+import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import { default as thunk } from 'redux-thunk';
-import {SHOW_PER_PAGE_OPTIONS} from "../constants";
-import {createLogger} from 'redux-logger';
+import {SHOW_PER_PAGE_OPTIONS} from '../constants';
 
 describe('durationPipe transforms correctly', () => {
   it('0 secs to 0:00', () => {
