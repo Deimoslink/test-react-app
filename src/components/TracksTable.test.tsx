@@ -3,7 +3,8 @@ import TracksTable, {durationPipe} from './TracksTable';
 import {shallow} from 'enzyme';
 import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import { default as thunk } from 'redux-thunk';
-import {SHOW_PER_PAGE_OPTIONS} from '../constants';
+import {DEFAULT_STATE} from '../constants';
+import getReducers from '../reducers';
 
 describe('durationPipe transforms correctly', () => {
   it('0 secs to 0:00', () => {
@@ -17,69 +18,10 @@ describe('durationPipe transforms correctly', () => {
   });
 });
 
-function setMockState(defaultState) {
-  const filtersReducer = (state = defaultState.filters, action) => {
-    if (action.type === 'SET_FILTERS') {
-      return action.payload;
-    }
-    return state;
-  };
-
-  const sortingReducer = (state = defaultState.sorting, action) => {
-    if (action.type === 'SET_SORTING') {
-      return action.payload;
-    }
-    return state;
-  };
-
-  const showPerPageReducer = (state = defaultState.showPerPage, action) => {
-    if (action.type === 'SET_SHOW_PER_PAGE') {
-      return action.payload;
-    }
-    return state;
-  };
-
-  const currentPageReducer = (state = defaultState.currentPage, action) => {
-    if (action.type === 'SET_CURRENT_PAGE') {
-      return action.payload;
-    }
-    return state;
-  };
-
-  const resultsReducer = (state = defaultState.results, action) => {
-    if (action.type === 'SET_RESULTS') {
-      return action.payload;
-    }
-    return state;
-  };
-
-  const reducer = {
-    filters: filtersReducer,
-    sorting: sortingReducer,
-    showPerPage: showPerPageReducer,
-    results: resultsReducer,
-    currentPage: currentPageReducer
-  };
-
-  return createStore(combineReducers({...reducer}), compose(applyMiddleware(thunk)));
+function setMockState(options) {
+  const defaultState = {...DEFAULT_STATE, ...options};
+  return createStore(combineReducers({...getReducers(defaultState)}), compose(applyMiddleware(thunk)));
 }
-
-const mockDefaultState = {
-  sorting: {
-    field: '',
-    direction: ''
-  },
-  showPerPage: SHOW_PER_PAGE_OPTIONS[0],
-  currentPage: 1,
-  filters: {
-    artist: '',
-    name: ''
-  },
-  results: {
-    content: [],
-    total: 0
-  },
-};
 
 describe('should give classes to sorting buttons correctly', () => {
   let store;
@@ -89,9 +31,10 @@ describe('should give classes to sorting buttons correctly', () => {
     const options = {
       sorting: {
         field: 'artist',
-        direction: 'asc'}
+        direction: 'asc'
+      }
     };
-    store = setMockState({...mockDefaultState, ...options});
+    store = setMockState(options);
     wrapper = shallow(<TracksTable store={store}/>).dive();
     expect(wrapper.instance().tableHeaderClassNames('artist', true)).toBe('glyphicon fr pointable glyphicon-sort-by-alphabet');
   });
@@ -102,7 +45,7 @@ describe('should give classes to sorting buttons correctly', () => {
         field: 'artist',
         direction: 'desc'}
     };
-    store = setMockState({...mockDefaultState, ...options});
+    store = setMockState(options);
     wrapper = shallow(<TracksTable store={store}/>).dive();
     expect(wrapper.instance().tableHeaderClassNames('artist', true)).toBe('glyphicon fr pointable glyphicon-sort-by-alphabet-alt');
   });
@@ -113,7 +56,7 @@ describe('should give classes to sorting buttons correctly', () => {
         field: 'artist',
         direction: 'desc'}
     };
-    store = setMockState({...mockDefaultState, ...options});
+    store = setMockState(options);
     wrapper = shallow(<TracksTable store={store}/>).dive();
     expect(wrapper.instance().tableHeaderClassNames('name', true)).toBe('glyphicon fr pointable glyphicon-sort');
   });
