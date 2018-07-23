@@ -8,6 +8,10 @@ import Filters from './Filters';
 import Paginator from './Paginator';
 import ShowPerPage from './ShowPerPage';
 
+export const durationPipe = (secs: number): string => {
+    return `${Math.floor(secs / 60)}:${secs % 60 < 10 ? + '0' : ''}${secs % 60}`
+};
+
 class TracksTable extends React.Component<any, any> {
 
     public toggleSortingRules(field): void {
@@ -25,10 +29,6 @@ class TracksTable extends React.Component<any, any> {
             field,
             direction
         });
-    }
-
-    public durationPipe(secs: number): string {
-        return `${Math.floor(secs / 60)}:${secs % 60 < 10 ? + '0' : ''}${secs % 60}`
     }
 
     public tableHeaderClassNames(field: string, isAlphabetic?: boolean): string {
@@ -81,7 +81,7 @@ class TracksTable extends React.Component<any, any> {
                                 <tr key={i}>
                                     <td>{track.artist}</td>
                                     <td>{track.name}</td>
-                                    <td>{this.durationPipe(track.duration)}</td>
+                                    <td>{durationPipe(track.duration)}</td>
                                     <td>{track.playcount}</td>
                                 </tr>
                             )}

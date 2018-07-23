@@ -3,7 +3,6 @@ import {getTracksWithPagination} from './api.service';
 export const setNewResults = () => {
     return (dispatch, getState) => {
         const {currentPage, filters, sorting, showPerPage} = getState();
-        console.log(currentPage, showPerPage, filters, sorting);
         getTracksWithPagination(currentPage, filters, sorting, showPerPage).then(res => {
             dispatch({
                 type: 'SET_RESULTS',
