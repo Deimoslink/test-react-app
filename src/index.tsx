@@ -1,11 +1,11 @@
 import * as React from 'react';
-import './index.css';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
 import {render} from 'react-dom';
+import {Provider as Provider} from 'react-redux';
 import App from './App';
 import store from './store';
-import {Provider as Provider} from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
+import './index.css';
 
 render(
     <Provider store={store}>
