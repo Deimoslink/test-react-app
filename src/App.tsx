@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 import TracksTable from './components/TracksTable';
 import Home from './components/Home';
+import TrackPage from './components/TrackPage';
 import {LinkContainer, IndexLinkContainer} from 'react-router-bootstrap';
 
 
@@ -28,6 +29,7 @@ class App extends React.Component {
                 <div className="container">
                     <Route exact={true} path="/" component={Home} />
                     <Route path="/table" component={TracksTable} />
+                    <Route path="/track/:id" component={TrackPage} />
                 </div>
             </div>
         </Router>

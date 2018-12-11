@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3030/tracks';
+const BASE_URL = 'http://localhost:3030/tracks/';
 
 export const getTracksWithPagination = (currentPage, filters, sorting, showPerPage) => {
     let params: any = {
@@ -12,5 +12,9 @@ export const getTracksWithPagination = (currentPage, filters, sorting, showPerPa
     if (sorting.field) {
         params = {...params, ...{_sort: sorting.field, _order: sorting.direction}}
     }
-  return axios.get(BASE_URL, {params})
+  return axios.get(BASE_URL, {params});
+};
+
+export const getTrackById = (id) => {
+    return axios.get(BASE_URL + id);
 };

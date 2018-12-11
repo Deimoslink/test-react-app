@@ -7,6 +7,7 @@ import {setNewResults, setSorting} from '../actions';
 import Filters from './Filters';
 import Paginator from './Paginator';
 import ShowPerPage from './ShowPerPage';
+import {Link} from 'react-router-dom';
 
 export const durationPipe = (secs: number): string => {
     return `${Math.floor(secs / 60)}:${secs % 60 < 10 ? + '0' : ''}${secs % 60}`
@@ -80,7 +81,7 @@ class TracksTable extends React.Component<any, any> {
                             {this.props.results.content.map((track, i) =>
                                 <tr key={i}>
                                     <td>{track.artist}</td>
-                                    <td>{track.name}</td>
+                                    <td><Link  to={'/track/' + track.id}>{track.name}</Link></td>
                                     <td>{durationPipe(track.duration)}</td>
                                     <td>{track.playcount}</td>
                                 </tr>
